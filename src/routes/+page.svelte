@@ -25,6 +25,7 @@
 	let timeFilter = -1;
 	let selectedStation = null;
 	let isochrone = null;
+	let mapError = "";
 
 	let radiusScale = d3.scaleSqrt().domain([0, 0]).range([0, 25]);
 	const stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
@@ -87,6 +88,7 @@
 
 	onMount(async () => {
 		if (!MAPBOX_ACCESS_TOKEN) {
+			mapError = "Missing Mapbox token. Set PUBLIC_MAPBOX_ACCESS_TOKEN for local dev or GitHub secret for deploy.";
 			console.error("Missing PUBLIC_MAPBOX_ACCESS_TOKEN");
 			return;
 		}
@@ -236,6 +238,10 @@
 	station isochrones.
 </p>
 
+{#if mapError}
+	<p class="error">{mapError}</p>
+{/if}
+
 <div id="map">
 	<svg>
 		{#key mapViewChanged}
@@ -307,6 +313,7 @@
 		position: relative;
 		flex: 1;
 		min-height: 70vh;
+		background: #f2f2f2;
 	}
 
 	:global(.mapboxgl-canvas) {
@@ -373,5 +380,10 @@
 
 	.legend > div:nth-child(3) {
 		text-align: right;
+	}
+
+	.error {
+		color: #b00020;
+		font-weight: 600;
 	}
 </style>
