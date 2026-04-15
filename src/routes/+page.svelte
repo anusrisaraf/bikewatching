@@ -4,7 +4,7 @@
 	import mapboxgl from "mapbox-gl";
 	import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
-	const MAPBOX_ACCESS_TOKEN = "PASTE_YOUR_MAPBOX_ACCESS_TOKEN_HERE";
+	const MAPBOX_ACCESS_TOKEN = import.meta.env.PUBLIC_MAPBOX_ACCESS_TOKEN;
 	const STATION_DATA_URL = "https://vis-society.github.io/labs/9/data/bluebikes-stations.csv";
 	const TRIP_DATA_URL = "https://vis-society.github.io/labs/9/data/bluebikes-traffic-2024-03.csv";
 	const BOSTON_BIKE_LANES_URL =
@@ -12,7 +12,7 @@
 	const CAMBRIDGE_BIKE_LANES_URL =
 		"https://raw.githubusercontent.com/cambridgegis/cambridgegis_data/main/Recreation/Bike_Facilities/RECREATION_BikeFacilities.geojson";
 
-	mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+	mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN || "";
 
 	let map;
 	let stations = [];
@@ -86,6 +86,10 @@
 	}
 
 	onMount(async () => {
+		if (!MAPBOX_ACCESS_TOKEN) {
+			console.error("Missing PUBLIC_MAPBOX_ACCESS_TOKEN");
+			return;
+		}
 		await Promise.all([initializeMap(), loadStationAndTripData()]);
 	});
 
