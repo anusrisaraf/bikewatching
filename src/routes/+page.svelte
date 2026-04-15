@@ -2,9 +2,10 @@
 	import { onMount } from "svelte";
 	import * as d3 from "d3";
 	import mapboxgl from "mapbox-gl";
+	import { PUBLIC_MAPBOX_ACCESS_TOKEN } from "$env/static/public";
 	import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
-	const MAPBOX_ACCESS_TOKEN = import.meta.env.PUBLIC_MAPBOX_ACCESS_TOKEN;
+	const MAPBOX_ACCESS_TOKEN = PUBLIC_MAPBOX_ACCESS_TOKEN;
 	const STATION_DATA_URL = "https://vis-society.github.io/labs/9/data/bluebikes-stations.csv";
 	const TRIP_DATA_URL = "https://vis-society.github.io/labs/9/data/bluebikes-traffic-2024-03.csv";
 	const BOSTON_BIKE_LANES_URL =
